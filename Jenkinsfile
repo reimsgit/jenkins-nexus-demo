@@ -10,10 +10,14 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps { checkout scm }
+            steps {
+                checkout scm
+            }
         }
         stage('Build') {
-            steps { sh "${MAVEN_HOME}/bin/mvn clean package" }
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean package"
+            }
         }
         stage('Deploy to Nexus') {
             steps {
@@ -26,10 +30,10 @@ pipeline {
                     repository: "${NEXUS_REPO}",
                     credentialsId: "${NEXUS_CREDENTIALS_ID}",
                     artifacts: [
-                        [ artifactId: 'mon-appli',
-                          classifier: '',
-                          file: 'target/mon-appli-1.0.0.jar',
-                          type: 'jar' ]
+                        [artifactId: 'mon-appli',
+                         classifier: '',
+                         file: 'target/mon-appli-1.0.0.jar',
+                         type: 'jar']
                     ]
                 )
             }
